@@ -44,11 +44,11 @@ const Header = () => {
       </StyledLink>
       <StyledLink
         to={{
-          pathname: '/cars'
+          pathname: '/shows'
         }}
         activeClassName="active"
       >
-        Cars
+        Shows
       </StyledLink>
     </Container>
   );

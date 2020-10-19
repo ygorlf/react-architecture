@@ -5,7 +5,7 @@ import styled from 'styled-components';
 // Pages
 import Albums from '../albums/Albums';
 import Cities from '../cities/Cities';
-import Cars from '../cars/Cars';
+import Shows from '../shows/Shows';
 
 // Components
 import Header from '../../components/Header';
@@ -36,9 +36,9 @@ class Layouts extends Component {
         />
         <Route
           exact
-          path="/cars"
+          path="/shows"
           render={() => (
-            <Cars />
+            <Shows />
           )}
         />
       </Switch>

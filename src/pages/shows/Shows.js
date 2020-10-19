@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import {
+  useQuery,
+} from 'react-query';
+
+import Loader from '../../components/Loader';
 
 const List = styled.header`
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
 `;
 
@@ -28,12 +34,26 @@ const Name = styled.span`
   font: 600 .85rem 'Roboto', sans-serif;
 `;
 
+function useShows() {
+  return useQuery('shows', async () => {
+    const response = await axios.get('https://my-json-server.typicode.com/ygorlf/mock-data/shows');
+
+    return response.data;
+  });
+};
+
 const Cars = () => {
-  const cars = Array.from(Array(60).keys());
+  const { status, data, error, isFetching } = useShows();
+
+  if (isFetching) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <List>
-      {cars.map((item) => (
+      {data.map((show) => (
         <Car>
           <Icon>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -41,7 +61,7 @@ const Cars = () => {
               <path fill="#f7f783" d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-5 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm4 8h-8v-1c0-1.33 2.67-2 4-2s4 .67 4 2v1z" />
             </svg>
           </Icon>
-          <Name>Tiguan</Name>
+          <Name>{show.title}</Name>
         </Car>
       ))}
     </List>

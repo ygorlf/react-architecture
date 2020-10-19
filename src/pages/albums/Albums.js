@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import {
+  useQuery,
+} from 'react-query';
+
+import Loader from '../../components/Loader';
 
 const List = styled.header`
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
 `;
 
@@ -28,12 +34,26 @@ const Name = styled.span`
   font: 600 .85rem 'Roboto', sans-serif;
 `;
 
+function useAlbums() {
+  return useQuery('albums', async () => {
+    const response = await axios.get('https://my-json-server.typicode.com/ygorlf/mock-data/albums');
+
+    return response.data;
+  });
+};
+
 const Albums = () => {
-  const albums = Array.from(Array(60).keys());
+  const { status, data, error, isFetching } = useAlbums();
+
+  if (isFetching) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <List>
-      {albums.map((item) => (
+      {data.map((album) => (
         <Album>
           <Icon>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 12.8">
@@ -48,7 +68,7 @@ const Albums = () => {
               </g>
             </svg>
           </Icon>
-          <Name>21</Name>
+          <Name>{album.title}</Name>
         </Album>
       ))}
     </List>

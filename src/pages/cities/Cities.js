@@ -1,10 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import {
+  useQuery,
+} from 'react-query';
+
+import Loader from '../../components/Loader';
 
 const List = styled.header`
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
 `;
 
@@ -28,13 +34,26 @@ const Name = styled.span`
   font: 600 .85rem 'Roboto', sans-serif;
 `;
 
+function useCities() {
+  return useQuery('cities', async () => {
+    const response = await axios.get('https://my-json-server.typicode.com/ygorlf/mock-data/cities');
+
+    return response.data;
+  });
+};
 
 const Cities = () => {
-  const cities = Array.from(Array(60).keys());
+  const { status, data, error, isFetching } = useCities();
+
+  if (isFetching) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <List>
-      {cities.map((item) => (
+      {data.map((city) => (
         <City>
           <Icon>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -42,7 +61,7 @@ const Cities = () => {
               <path fill="#f7f783" d="M23 18V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2zM8.5 12.5l2.5 3.01L14.5 11l4.5 6H5l3.5-4.5z" />
             </svg>
           </Icon>
-          <Name>São Paulo</Name>
+          <Name>{city.name}</Name>
         </City>
       ))}
     </List>
