@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.header`
@@ -12,10 +12,15 @@ const Container = styled.header`
   background-color: #cc95f0;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
   color: #000;
   text-decoration: none;
-  font: 700 .9rem 'Roboto', sans-serif;
+  font: 400 .9rem 'Roboto', sans-serif;
+
+  &.active {
+    border-bottom: 2px solid #000;
+    font: 700 .9rem 'Roboto', sans-serif;
+  }
 `;
 
 const Header = () => {
@@ -25,6 +30,7 @@ const Header = () => {
         to={{
           pathname: '/albums'
         }}
+        activeClassName="active"
       >
         Albums
       </StyledLink>
@@ -32,6 +38,7 @@ const Header = () => {
         to={{
           pathname: '/cities'
         }}
+        activeClassName="active"
       >
         Cities
       </StyledLink>
@@ -39,6 +46,7 @@ const Header = () => {
         to={{
           pathname: '/cars'
         }}
+        activeClassName="active"
       >
         Cars
       </StyledLink>
