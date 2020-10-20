@@ -14,13 +14,13 @@ function App() {
         <Route
           exact
           path='/login'
-          component={() => (
-            <Login />
+          component={(props) => (
+            <Login {...props} />
           )}
         />
         <Route
-          component={() => (
-            <Layouts />
+          component={(props) => (
+            <Layouts {...props} />
           )}
         />
       </BrowserRouter>
