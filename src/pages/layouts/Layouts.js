@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 // Pages
@@ -41,6 +41,12 @@ class Layouts extends Component {
             <Shows />
           )}
         />
+        <Route
+          exact
+          path='/'
+        >
+          <Redirect to='/albums' />
+        </Route>
       </Switch>
     )
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 // Assets
 import logo from '../../assets/kraken.png';
@@ -100,6 +101,41 @@ class Login extends Component {
   state = {
     isLoading: false,
   };
+
+  handleCookie = (accessToken) => {
+    window.localStorage.setItem('react_architecture', JSON.stringify({
+      accessToken,
+    }));
+    
+    this.props.history.replace('/');
+  }
+
+  handleLogin = async (ev) => {
+    ev.preventDefault();
+  
+    this.setState({
+      isLoading: true,
+    });
+  
+    try {
+      const response = await axios.post('https://mocked-auth.herokuapp.com/auth', {
+        identifier: this.email.value,
+        password: this.password.value,
+      });
+  
+      this.handleCookie(
+        response.data.token,
+      );
+  
+      this.setState({
+        isLoading: false,
+      });
+    } catch (err) {
+      this.setState({
+        isLoading: false,
+      });
+    }
+  }
 
   render() {
     const { isLoading } = this.state;
