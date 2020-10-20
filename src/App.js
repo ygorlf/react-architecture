@@ -7,6 +7,9 @@ import './App.css';
 import Login from './pages/login/Login';
 import Layouts from './pages/layouts/Layouts';
 
+// Private HOC
+import Private from './private';
+
 function App() {
   return (
     <div className='App'>
@@ -18,7 +21,7 @@ function App() {
             <Login {...props} />
           )}
         />
-        <Route
+        <Private
           component={(props) => (
             <Layouts {...props} />
           )}
